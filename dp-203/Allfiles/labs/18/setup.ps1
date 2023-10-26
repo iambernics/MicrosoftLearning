@@ -42,7 +42,7 @@ if($subs.GetType().IsArray -and $subs.length -gt 1){
 # Prompt user for a password for the SQL Database
 $sqlUser = "SQLUser"
 write-host ""
-$sqlPassword = ""
+$sqlPassword = "nV~l73VV)1["
 $complexPassword = 0
 
 while ($complexPassword -ne 1)
@@ -83,9 +83,9 @@ $resourceGroupName = "dp203-$suffix"
 
 # Choose a random region
 Write-Host "Finding an available region. This may take several minutes...";
-$delay = 0, 30, 60, 90, 120 | Get-Random
+$delay = 15
 Start-Sleep -Seconds $delay # random delay to stagger requests from multi-student classes
-$preferred_list = "australiaeast","centralus","southcentralus","eastus2","northeurope","southeastasia","uksouth","westeurope","westus","westus2"
+$preferred_list = "westus","westus2"
 $locations = Get-AzLocation | Where-Object {
     $_.Providers -contains "Microsoft.Synapse" -and
     $_.Providers -contains "Microsoft.Sql" -and
