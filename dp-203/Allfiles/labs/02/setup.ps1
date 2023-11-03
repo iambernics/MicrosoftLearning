@@ -42,8 +42,30 @@ if($subs.GetType().IsArray -and $subs.length -gt 1){
 # Prompt user for a password for the SQL Database
 $sqlUser = "SQLUser"
 write-host ""
-$sqlPassword = "nV~l73VV)1["
+$sqlPassword = ""
 $complexPassword = 0
+
+while ($complexPassword -ne 1)
+{
+    $SqlPassword = Read-Host "Enter a password to use for the $sqlUser login.
+    `The password must meet complexity requirements:
+    ` - Minimum 8 characters. 
+    ` - At least one upper case English letter [A-Z]
+    ` - At least one lower case English letter [a-z]
+    ` - At least one digit [0-9]
+    ` - At least one special character (!,@,#,%,^,&,$)
+    ` "
+
+    if(($SqlPassword -cmatch '[a-z]') -and ($SqlPassword -cmatch '[A-Z]') -and ($SqlPassword -match '\d') -and ($SqlPassword.length -ge 8) -and ($SqlPassword -match '!|@|#|%|\^|&|\$'))
+    {
+        $complexPassword = 1
+	    Write-Output "Password $SqlPassword accepted. Make sure you remember this!"
+    }
+    else
+    {
+        Write-Output "$SqlPassword does not meet the complexity requirements."
+    }
+}
 
 
 # Register resource providers
@@ -62,7 +84,7 @@ $resourceGroupName = "dp000-$suffix"
 
 # Choose a random region
 Write-Host "Finding an available region. This may take several minutes...";
-$delay = 0, 30, 60, 90, 120 | Get-Random
+$delay = 15
 Start-Sleep -Seconds $delay # random delay to stagger requests from multi-student classes
 $preferred_list = "westus","westus2"
 $locations = Get-AzLocation | Where-Object {

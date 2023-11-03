@@ -58,7 +58,7 @@ $locations = Get-AzLocation | Where-Object {
 
 # Choose a region
 Write-Host "Preparing to deploy. This may take several minutes...";
-$delay = 0, 30, 60, 90, 120 | Get-Random
+$delay = 15
 Start-Sleep -Seconds $delay # random delay to stagger requests from multi-student classes
 $max_index = $locations.Count - 1
 $rand = (0..$max_index) | Get-Random
